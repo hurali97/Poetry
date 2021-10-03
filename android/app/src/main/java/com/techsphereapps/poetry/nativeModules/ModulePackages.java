@@ -6,6 +6,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.techsphereapps.poetry.arportal.RCTarbridge;
 import com.techsphereapps.poetry.nativeModules.firebase.cloudmessaging.Notifications;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class ModulePackages implements ReactPackage {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new Notifications(reactContext));
-
+        modules.add(new RCTarbridge(reactContext));
         return modules;
     }
 

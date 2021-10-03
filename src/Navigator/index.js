@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Animated, DeviceEventEmitter, Image, PanResponder, Text,
+  Animated, DeviceEventEmitter, Image, NativeModules, PanResponder, Text,
   TouchableOpacity
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -67,7 +67,7 @@ class MainNavigator extends React.Component {
       // onMoveShouldSetPanResponderCapture: () => true, // Same here, tell iOS that we allow dragging
       // onMoveShouldSetPanResponder: () => true,
       // Fix, because touchable opacity on press won;t work
-      onMoveShouldSetPanResponder: (evt, {dx, dy}) => {
+      onMoveShouldSetPanResponder: (evt, { dx, dy }) => {
         if (dx > 0 || dy > 0) {
           return true;
         }
@@ -713,8 +713,12 @@ class MainNavigator extends React.Component {
 
     return <Animated.View style={[styles.spinParent, { transform: transform }]}
       {...this._panResponder?.panHandlers}
-      >
-      <TouchableOpacity onPress={() => props.navigation.navigate('SpinScreen')} activeOpacity={0.7} style={styles.spinButton}>
+    >
+      <TouchableOpacity
+        // onPress={() => props.navigation.navigate('SpinScreen')}
+        onPress={()=>NativeModules?.ARportal?.openARportal()}
+        activeOpacity={0.7}
+        style={styles.spinButton}>
         <Image
           source={allImages.generalIcons.spinner}
           style={styles.spinImage}
