@@ -132,8 +132,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         compileSdkVersion rootProject.ext.compileSdkVersion
-        versionCode 23
-        versionName "1.2.3"
+        versionCode 25
+        versionName "1.2.5"
         multiDexEnabled true
     }
      aaptOptions { cruncherEnabled = false }
