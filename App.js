@@ -10,13 +10,10 @@ import React from 'react';
 import {StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {setEmojiData} from 'rn-emoji-keyboard';
 import MainNavigator from './src/Navigator';
 import {store, persistor} from './src/redux';
 import {appTheme} from './src/Utils';
 import ErrorBoundary from './src/Components/ErrorBoundary';
-
-setEmojiData();
 
 const App = () => {
   return (
