@@ -104,14 +104,13 @@ class HomeScreen extends React.Component {
     });
   };
 
-  _renderPoetCard = ({item, index}) => {
+  _renderPoetCard = ({item}) => {
     let _poet = item;
 
     return (
       <ArtistCard
         poet={_poet.name}
         source={{uri: _poet.image}}
-        key={{index}}
         onPress={() => this._navigateToPoetDetails(_poet.name)}
       />
     );
@@ -176,6 +175,7 @@ class HomeScreen extends React.Component {
               slideStyle={{marginHorizontal: 1 * vw}}
               inactiveSlideOpacity={1}
               contentContainerCustomStyle={{marginLeft: 1 * vw}}
+              keyExtractor={poetCardKeyExtractor}
             />
           </SkeletonContent>
         </View>
@@ -366,6 +366,7 @@ class HomeScreen extends React.Component {
 }
 
 const trendingKeyExtractor = (_, ind) => String(ind);
+const poetCardKeyExtractor = (_, ind) => `poetCard-${String(ind)}`;
 
 const mapStateToProps = state => {
   let _poets = state.GeneralReducer.poets;
