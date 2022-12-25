@@ -54,8 +54,6 @@ public class MainActivity extends ReactActivity {
     handleIntent(getIntent());
     
     checkForAppUpdate();
-
-//    showReviewPopup();
   }
 
   private void showReviewPopup(){

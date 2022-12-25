@@ -76,7 +76,7 @@ public class Splash {
         dialog.show();
 
 
-        startFadeAnimation(Logo, 2500);
+        startFadeAnimation(Logo, 1000);
 
         Log.d("SPLASH SHOW ", "show:  hiii");
     }
