@@ -336,7 +336,7 @@ class HomeScreen extends React.Component {
 
   onLoginPress = () => {
     this.featurePopupRef.hide();
-    this.props.navigation.navigate('LoginScreen');
+    this.props.navigation.navigate('AuthStack', {screen: 'LoginScreen'});
   };
 
   render() {

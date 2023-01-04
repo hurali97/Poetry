@@ -1,6 +1,7 @@
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import * as Repack from '@callstack/repack';
+import appConfig from './app.json' assert {type: 'json'};
 
 /**
  * More documentation, installation, usage, motivation and differences with Metro is available at:
@@ -22,7 +23,7 @@ export default env => {
     mode = 'development',
     context = Repack.getDirname(import.meta.url),
     entry = './index.js',
-    platform = process.env.PLATFORM,
+    platform = 'android',
     minimize = mode === 'production',
     devServer = undefined,
     bundleFilename = undefined,
@@ -230,6 +231,17 @@ export default env => {
           sourceMapFilename,
           assetsPath,
         },
+        extraChunks: [
+          {
+            exclude: appConfig.remoteChunks,
+            type: 'local',
+          },
+          {
+            include: appConfig.remoteChunks,
+            type: 'remote',
+            outputPath: path.join('build/output', platform, 'remote'),
+          },
+        ],
       }),
     ],
   };

@@ -395,7 +395,7 @@ class FeedScreen extends React.Component {
 
   onLoginPress = () => {
     this.loginPopupRef.hide();
-    this.props.navigation.navigate('LoginScreen');
+    this.props.navigation.navigate('AuthStack', {screen: 'LoginScreen'});
   };
 
   render() {

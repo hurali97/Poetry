@@ -1,4 +1,5 @@
 {
   "name": "poetry",
-  "displayName": "poetry"
+  "displayName": "poetry",
+  "remoteChunks": ["feed", "poet", "auth"]
 }

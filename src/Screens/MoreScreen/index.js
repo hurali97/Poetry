@@ -5,8 +5,13 @@ import allImages from '../../assets/images';
 import MoreItem from '../../Components/MoreItem/index.js';
 import actions from '../../redux/actions/index.js';
 import styles from './styles.js';
+import {ScriptManager} from '@callstack/repack/client';
 
 class MoreScreen extends React.Component {
+  componentDidMount() {
+    ScriptManager.shared.loadScript('auth');
+  }
+
   renderProfileItem = () => {
     if (!this.props.token) {
       return null;
@@ -36,7 +41,9 @@ class MoreScreen extends React.Component {
     if (!this.props.token) {
       return (
         <MoreItem
-          onPress={() => this.props.navigation.navigate('LoginScreen')}
+          onPress={() =>
+            this.props.navigation.navigate('AuthStack', {screen: 'LoginScreen'})
+          }
           title="Log In"
           image={allImages.generalIcons.login}
         />

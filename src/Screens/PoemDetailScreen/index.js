@@ -472,6 +472,7 @@ class PoemDetailScreen extends React.PureComponent {
             onEndReached={this.onEndReached}
             onEndReachedThreshold={0.16}
           />
+          {this._renderBottomSheet()}
         </SkeletonContent>
       </View>
     );

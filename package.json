@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint .",
     "bundle": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-    "bundle:android": "react-native webpack-bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
+    "wp:bundle-android": "react-native webpack-bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
@@ -58,7 +58,7 @@
     "@babel/core": "^7.10.2",
     "@babel/runtime": "^7.10.2",
     "@callstack/eslint-config": "^12.0.2",
-    "@callstack/repack": "^3.0.1",
+    "@callstack/repack": "3.0.0",
     "@react-native-community/eslint-config": "^1.1.0",
     "babel-jest": "^26.0.1",
     "babel-loader": "^9.1.0",
@@ -68,7 +68,7 @@
     "react-native-flipper-performance-plugin": "^0.3.0",
     "react-test-renderer": "16.11.0",
     "terser-webpack-plugin": "^5.3.6",
-    "webpack": "^5.75.0"
+    "webpack": "^5.73.0"
   },
   "jest": {
     "preset": "react-native"

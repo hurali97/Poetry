@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Animated,
   DeviceEventEmitter,
   Image,
@@ -7,7 +8,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {connect} from 'react-redux';
@@ -16,7 +17,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../Screens/HomeScreen';
 
 import MoreScreen from '../Screens/MoreScreen';
-import PoetsScreen from '../Screens/PoetsScreen';
 import CategoriesScreen from '../Screens/CategoriesScreen';
 import CategoryDetailsScreen from '../Screens/CategoryDetailsScreen';
 import PoetPoemsScreen from '../Screens/PoetPoemsScreen';
@@ -26,12 +26,8 @@ import allImages from '../assets/images';
 import SearchModal from '../Components/SearchModal';
 import PoemDetailScreen from '../Screens/PoemDetailScreen';
 import SearchScreen from '../Screens/SearchScreen';
-import SignupScreen from '../Screens/Authentication/SignupScreen';
-import LoginScreen from '../Screens/Authentication/LoginScreen';
-import ForgotPasswordScreen from '../Screens/Authentication/ForgotPasswordScreen';
 import ProfileScreen from '../Screens/Profile/ProfileScreen';
 import EditProfileScreen from '../Screens/Profile/EditProfileScreen';
-import FeedScreen from '../Screens/FeedScreen';
 import CreatePoemScreen from '../Screens/CreatePoemScreen';
 import MyLikesScreen from '../Screens/MyLikesScreen';
 import NotificationsScreen from '../Screens/NotificationsScreen';
@@ -41,10 +37,10 @@ import CustomTabBar from '../Components/CustomTabBar';
 import AllFriendsScreen from '../Screens/Profile/AllFriendsScreen';
 
 import {vw} from '../Units';
-import styles from './styles';
-import RequestStackNavigator from './RequestStackNavigator';
 import AllUserScreen from '../Screens/Profile/AllUserScreen';
 import SpinScreen from '../Screens/SpinScreen';
+import styles from './styles';
+import RequestStackNavigator from './RequestStackNavigator';
 
 const Tabs = createMaterialTopTabNavigator();
 
@@ -56,6 +52,57 @@ const WishStack = createStackNavigator();
 const FeedStack = createStackNavigator();
 
 const RootStack = createNativeStackNavigator();
+
+const WithSuspense = ({children}) => {
+  return (
+    <React.Suspense
+      fallback={
+        <ActivityIndicator color={'#000'} style={styles.suspenseIndicator} />
+      }
+    >
+      {children}
+    </React.Suspense>
+  );
+};
+
+const LazyFeed = React.lazy(() =>
+  import(/* webpackChunkName: "feed" */ '../Screens/FeedScreen'),
+);
+
+const LazyPoet = React.lazy(() =>
+  import(/* webpackChunkName: "poet" */ '../Screens/PoetsScreen'),
+);
+
+const LazyAuthStack = React.lazy(() =>
+  import(/* webpackChunkName: "auth" */ './AuthStackNavigator'),
+);
+
+const LazyFeedScreen = () => {
+  const navigation = useNavigation();
+  return (
+    <WithSuspense>
+      <LazyFeed navigation={navigation} />
+    </WithSuspense>
+  );
+};
+
+const LazyPoetScreen = () => {
+  const navigation = useNavigation();
+  return (
+    <WithSuspense>
+      <LazyPoet navigation={navigation} />
+    </WithSuspense>
+  );
+};
+
+const LazyAuthStackNavigator = () => {
+  return (
+    <WithSuspense>
+      <LazyAuthStack />
+    </WithSuspense>
+  );
+};
+
 class MainNavigator extends React.Component {
   constructor(props) {
     super(props);
@@ -177,7 +224,10 @@ class MainNavigator extends React.Component {
 
     if (routeName == 'HomeScreen') {
       return (
-        <TouchableOpacity onPress={() => this.navigateToSearchScreen(props)}>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={() => this.navigateToSearchScreen(props)}
+        >
           <Image
             source={allImages.generalIcons.searchIcon}
             style={styles.imageStyle}
@@ -321,7 +371,7 @@ class MainNavigator extends React.Component {
         screenOptions={this._DefaultHeaderOptions}
         headerMode="screen"
       >
-        <PoetStack.Screen name="PoetsScreen" component={PoetsScreen} />
+        <PoetStack.Screen name="PoetsScreen" component={LazyPoetScreen} />
       </PoetStack.Navigator>
     );
   };
@@ -348,7 +398,7 @@ class MainNavigator extends React.Component {
         screenOptions={this._DefaultHeaderOptions}
         headerMode="screen"
       >
-        <FeedStack.Screen name="FeedScreen" component={FeedScreen} />
+        <FeedStack.Screen name="FeedScreen" component={LazyFeedScreen} />
       </FeedStack.Navigator>
     );
   };
@@ -450,31 +500,9 @@ class MainNavigator extends React.Component {
         />
 
         <RootStack.Screen
-          name="SignupScreen"
-          component={SignupScreen}
-          options={props => {
-            return {
-              animation: 'slide_from_right',
-              headerShown: false,
-            };
-          }}
-        />
-
-        <RootStack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={props => {
-            return {
-              animation: 'slide_from_right',
-              headerShown: false,
-            };
-          }}
-        />
-
-        <RootStack.Screen
-          name="ForgotPasswordScreen"
-          component={ForgotPasswordScreen}
-          options={props => {
+          name="AuthStack"
+          component={LazyAuthStackNavigator}
+          options={() => {
             return {
               animation: 'slide_from_right',
               headerShown: false,
@@ -595,6 +623,7 @@ class MainNavigator extends React.Component {
         {...this._panResponder?.panHandlers}
       >
         <TouchableOpacity
+          accessibilityRole="button"
           onPress={() => props.navigation.navigate('SpinScreen')}
           activeOpacity={0.7}
           style={styles.spinButton}
