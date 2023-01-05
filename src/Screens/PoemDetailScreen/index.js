@@ -98,6 +98,14 @@ class PoemDetailScreen extends React.PureComponent {
         });
       } else {
         setTimeout(this.showReviewPopUp, 2000);
+        this.setState({
+          refreshing: false,
+          poemDetails: this.props.route?.params?.poem,
+          convertedLines: this.props.route?.params?.poem?.lines?.slice(
+            0,
+            LIMIT,
+          ),
+        });
       }
     });
     this.props.navigation.addListener('blur', () => {
@@ -175,7 +183,6 @@ class PoemDetailScreen extends React.PureComponent {
 
   _getPoem = completed => {
     let _poemName = this.props.route?.params?.poem?.title;
-
     this.setState({refreshing: true});
 
     this.props.getPoems(
