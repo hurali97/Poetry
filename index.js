@@ -12,7 +12,7 @@ if (Platform.OS == 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-const chunkURLs = {
+export const chunkURLs = {
   feed: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Ffeed.chunk.bundle?alt=media&token=4bdba32f-3082-4be4-a029-aef091832987',
   auth: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Fauth.chunk.bundle?alt=media&token=2b22e5aa-b9f1-47f5-93ff-9099a69ad957',
   poet: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Fpoet.chunk.bundle?alt=media&token=ddaebfc2-885e-4267-aa96-14461f7f2f25',

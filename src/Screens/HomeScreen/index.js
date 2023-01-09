@@ -11,6 +11,8 @@ import Carousel from 'react-native-snap-carousel';
 import {connect} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
+import {ScriptManager} from '@callstack/repack/client';
+import NetInfo from '@react-native-community/netinfo';
 import CategoryCard from '../../../src/Components/CategoryCard';
 import {vw, vh} from '../../Units/index.js';
 import ArtistCard from '../../Components/ArtistCard/index.js';
@@ -24,6 +26,8 @@ import {
   startReceivingTaps,
 } from '../../NativeModules/Firebase/PushNotifications.js';
 import FeatureReleasedPopup from '../../Components/PopUps/FeatureReleasedPopup/index.js';
+import {chunkURLs} from '../../..';
+import {showToast} from '../../Api/HelperFunctions';
 import styles from './styles.js';
 
 class HomeScreen extends React.Component {
@@ -43,6 +47,7 @@ class HomeScreen extends React.Component {
 
   componentWillUnmount() {
     removeNotificationTapListener();
+    ScriptManager.shared.removeListener('error');
   }
 
   showFeaturePopUp = () => {
@@ -57,6 +62,16 @@ class HomeScreen extends React.Component {
 
   setUpListeners = () => {
     onNotificationTap(this.handlePushTaps);
+    Object.keys(chunkURLs).forEach(async id => {
+      await ScriptManager.shared.loadScript(id);
+    });
+    ScriptManager.shared.addListener('error', async () => {
+      const netinfoState = await NetInfo.fetch();
+      if (netinfoState.isConnected) {
+        return;
+      }
+      showToast('Please check your internet connection and restart the app');
+    });
   };
 
   handlePushTaps = data => {
