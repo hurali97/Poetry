@@ -8431,11 +8431,6 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rn-emoji-keyboard@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/rn-emoji-keyboard/-/rn-emoji-keyboard-1.1.0.tgz#8272fbc8d7a42d3ecce0c2bdf5f5af34cb5cdfde"
-  integrity sha512-gont8+js70NUz4UFHeaZzM4kwyFuBm2I17Y8NiWsOFpYqQ9kF6JN2yEczZfiyiDQ66DpG5xyJVHfcAbjXD6DZA==
-
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"

@@ -3,6 +3,7 @@ import {View, ImageBackground, Platform} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {connect} from 'react-redux';
 import LottieView from 'lottie-react-native';
+import {CommonActions} from '@react-navigation/routers';
 import allImages from '../../../assets/images/index';
 import RippleTouch from '../../../Components/RippleTouch/index.js';
 import TextSemiBold from '../../../Components/TextSemiBold/index';
@@ -78,9 +79,12 @@ class LoginScreen extends Component {
         },
       });
 
-      // this.props.navigation.replace("TabStack");
-      this.props.navigation.popToTop();
-      // this.props.navigation.navigate("TabStack");
+      this.props.navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: 'TabStack'}],
+        }),
+      );
     } catch (error) {
       if (error) {
         showToast(error);

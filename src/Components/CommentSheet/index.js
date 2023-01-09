@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {BlurView} from '@react-native-community/blur';
-import {EmojiKeyboard} from 'rn-emoji-keyboard';
 import allImages from '../../assets/images';
 import actions from '../../redux/actions';
 import {vh} from '../../Units';
@@ -25,7 +24,6 @@ class CommentSheet extends React.Component {
     currentMessage: '',
     poem_id: null,
     activeComment: null,
-    showEmoji: false,
     isVisible: false,
   };
 
@@ -43,7 +41,6 @@ class CommentSheet extends React.Component {
       comments: [],
       poem_id: null,
       isVisible: false,
-      showEmoji: false,
       activeComment: null,
     });
 
@@ -59,7 +56,6 @@ class CommentSheet extends React.Component {
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
-      showEmoji: false,
       activeComment:
         this.state.activeComment != null ? null : this.state.activeComment,
     });
@@ -91,25 +87,6 @@ class CommentSheet extends React.Component {
 
     return height;
   };
-
-  toggleEmojiBoard = () => {
-    if (this.inputRef) {
-      this.inputRef?.blur();
-    }
-
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({
-      showEmoji: !this.state.showEmoji,
-    });
-  };
-
-  onEmojiPress = data => {
-    this.setState({
-      currentMessage: `${this.state.currentMessage}${data?.emoji}`,
-    });
-  };
-
-  onEmojiClose = () => {};
 
   addComment = async () => {
     if (this.state.currentMessage?.trim() == '') {
@@ -280,25 +257,6 @@ class CommentSheet extends React.Component {
           <View style={styles.iconView}>
             <TouchableOpacity
               accessibilityRole="button"
-              onPress={this.toggleEmojiBoard}
-              style={styles.iconContainer}
-              activeOpacity={0.7}
-            >
-              <Image
-                source={allImages.generalIcons.emoji}
-                style={[
-                  styles.icon,
-                  {
-                    tintColor: this.state.showEmoji
-                      ? appTheme.darkGray
-                      : appTheme.gray,
-                  },
-                ]}
-              />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              accessibilityRole="button"
               onPress={this.addComment}
               style={styles.iconContainer}
               activeOpacity={0.7}
@@ -307,15 +265,6 @@ class CommentSheet extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-        {this.state.showEmoji ? (
-          <View style={styles.emojiContainer}>
-            <EmojiKeyboard
-              categoryPosition="bottom"
-              hideHeader
-              onEmojiSelected={this.onEmojiPress}
-            />
-          </View>
-        ) : null}
       </View>
     );
   };
@@ -354,12 +303,7 @@ class CommentSheet extends React.Component {
               reducedTransparencyFallbackColor="rgba(0,0,0,0.4)"
             />
           </TouchableOpacity>
-          <View
-            style={[
-              styles.content,
-              {height: this.state.showEmoji ? 65 * vh : 50 * vh},
-            ]}
-          >
+          <View style={styles.content}>
             <FlatList
               data={this.state.comments}
               renderItem={this.renderItem}

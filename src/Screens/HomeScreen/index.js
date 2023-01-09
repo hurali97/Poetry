@@ -47,7 +47,7 @@ class HomeScreen extends React.Component {
 
   componentWillUnmount() {
     removeNotificationTapListener();
-    ScriptManager.shared.removeListener('error');
+    ScriptManager.shared.removeListener('error', this.chunkErrorListener);
   }
 
   showFeaturePopUp = () => {
@@ -65,13 +65,15 @@ class HomeScreen extends React.Component {
     Object.keys(chunkURLs).forEach(async id => {
       await ScriptManager.shared.loadScript(id);
     });
-    ScriptManager.shared.addListener('error', async () => {
-      const netinfoState = await NetInfo.fetch();
-      if (netinfoState.isConnected) {
-        return;
-      }
-      showToast('Please check your internet connection and restart the app');
-    });
+    ScriptManager.shared.addListener('error', this.chunkErrorListener);
+  };
+
+  chunkErrorListener = async () => {
+    const netinfoState = await NetInfo.fetch();
+    if (netinfoState.isConnected) {
+      return;
+    }
+    showToast('Please check your internet connection and restart the app');
   };
 
   handlePushTaps = data => {
