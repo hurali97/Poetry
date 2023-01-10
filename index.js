@@ -13,9 +13,9 @@ if (Platform.OS == 'android') {
 }
 
 export const chunkURLs = {
-  feed: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Ffeed.chunk.bundle?alt=media&token=4bdba32f-3082-4be4-a029-aef091832987',
-  auth: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Fauth.chunk.bundle?alt=media&token=2b22e5aa-b9f1-47f5-93ff-9099a69ad957',
-  poet: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Fpoet.chunk.bundle?alt=media&token=ddaebfc2-885e-4267-aa96-14461f7f2f25',
+  feed: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Ffeed.chunk.bundle?alt=media&token=eb5d647f-d807-486f-8f23-bcdb610b8dd7',
+  auth: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Fauth.chunk.bundle?alt=media&token=a32c55b8-b03e-4def-bd14-a3a6f258c0a9',
+  poet: 'https://firebasestorage.googleapis.com/v0/b/poetry-54149.appspot.com/o/chunks%2Fpoet.chunk.bundle?alt=media&token=bdd6662f-f6c3-4a28-89e3-5ddf9ffb4d68',
 };
 
 ScriptManager.shared.setStorage(AsyncStorage);
